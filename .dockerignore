@@ -5,3 +5,11 @@
 __pycache__/
 *.pyc
 README.md
+.git
+media/
+static/
+*.sqlite3
+.pytest_cache/
+build/
+dist/
+*.egg-info/

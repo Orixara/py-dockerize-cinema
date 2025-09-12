@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from django.db import connections, DatabaseError
+from django.db import connections
+from django.db.utils import OperationalError
 import time
 
 
@@ -14,7 +15,7 @@ class Command(BaseCommand):
                 db_connection = connections["default"]
                 db_connection.ensure_connection()
                 break
-            except DatabaseError:
+            except OperationalError:
                 self.stdout.write("Try to connect again...")
                 time.sleep(1)
         self.stdout.write(self.style.SUCCESS("Database available!"))
