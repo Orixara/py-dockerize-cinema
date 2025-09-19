@@ -6,9 +6,11 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 WORKDIR /app
 
-RUN apk add --no-cache postgresql-dev gcc python3-dev musl-dev
+RUN apk add --no-cache --virtual .build-deps \
+    postgresql-dev gcc python3-dev musl-dev
 
 COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && \
+    apk del .build-deps
 
 COPY . .

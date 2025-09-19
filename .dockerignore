@@ -13,3 +13,6 @@ static/
 build/
 dist/
 *.egg-info/
+pip-wheel-metadata/
+.mypy_cache/
+.tox/

@@ -5,7 +5,7 @@ import time
 
 
 class Command(BaseCommand):
-    help_text = "Wait for database to be available"
+    help = "Wait for database to be available"
 
     def handle(self, *args, **options):
         self.stdout.write("Waiting for database...")
@@ -15,7 +15,9 @@ class Command(BaseCommand):
                 db_connection = connections["default"]
                 db_connection.ensure_connection()
                 break
-            except OperationalError:
-                self.stdout.write("Try to connect again...")
+            except OperationalError as e:
+                self.stdout.write(
+                    self.style.WARNING(f"Database unavailable, waiting 1 second... Error: {e}")
+                )
                 time.sleep(1)
         self.stdout.write(self.style.SUCCESS("Database available!"))
